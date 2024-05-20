@@ -1,4 +1,4 @@
-saldo, deposito, saque, transf = 5000,0,0,0
+saldo, deposito, saque, transf = 0,0,0,0
 quantidade_saque = 3
 
 def opcoes():
@@ -24,6 +24,7 @@ def depositar(saldo):
     deposito = float(input('Defina o valor a depositar: '))
     saldo += deposito
     print(f'Seu saldo atual é de {saldo}')
+    return saldo
     opcoes()
 
 def sacar(saldo):
@@ -36,6 +37,7 @@ def sacar(saldo):
     else:
         print('Valor excedido')
     opcoes()
+    return saldo
 
 def extrato(saldo):
     user = input('Para quem deseja transferir: ')
@@ -48,5 +50,6 @@ def extrato(saldo):
     else:
         print('Valor de transferencia excedido')
     opcoes()
+    return saldo
 
 opcoes()
