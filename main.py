@@ -1,55 +1,62 @@
-saldo, deposito, saque, transf = 0,0,0,0
-quantidade_saque = 3
+saldo = 0
+valor = 0
+limite = 500
+extrato = ""
+numero_saques = 0
+QUANTIDADE_SAQUE = 3
 
-def opcoes():
-  print()
-  print(f' ======= MENU =======')
-  print()
-  print('Selecione uma opção:')
-  print('1 - Depositar')
-  print('2 - Sacar')
-  print('3 - Extrato')
-  print('0 - Sair')
-  print('======================')
-  opcao = int(input())
+menu = '''======== MENU ========
 
-  if opcao == 1:
-    depositar(saldo)
-  elif opcao == 2:
-    sacar(saldo)
-  elif opcao == 3:
-    extrato(saldo)
+  Selecione uma opção:
+    1 - Depositar
+    2 - Sacar
+    3 - Extrato
+    0 - Sair
+======================\n'''
 
-def depositar(saldo):
-    deposito = float(input('Defina o valor a depositar: '))
-    saldo += deposito
-    print(f'Seu saldo atual é de {saldo}')
-    return saldo
-    opcoes()
+while True:
+    opcao = int(input(menu))
 
-def sacar(saldo):
-    saque = float(input('Defina o valor a sacar: '))
-    if saque < 0:
-        print('Valor inválido')
-    elif saque <= 500:
-        saldo -= saque
-        print(f'Seu saldo atual é {saldo}')
+    if opcao == 1:
+        valor = float(input("Digite o valor do depósito: "))
+
+        if valor > 0:
+            saldo += valor
+            print(f'Depósito de R$ {valor} efetuado com sucesso!\n')
+            extrato +=  f'Depósito de R$ {valor:.2f}\n'
+
+        else:
+            print('Falha no depósito, valor inválido!')
+
+    elif opcao == 2:
+        if valor > saldo:
+            print('Saldo insuficiente!')
+
+        elif valor > limite:
+            print('Valor do saque superior ao limite!')
+
+        elif numero_saques >= QUANTIDADE_SAQUE:
+            print('Excedido o número de saques diários')
+
+        elif valor > 0:
+            valor = float(input("Digite o valor do saque:"))
+            saldo -= valor
+            print(f'Saque de R$ {valor} efetuado com sucesso!')
+            extrato +=  f'Saque de R$ {valor}'
+
+        else:
+            print('Valor inválido!')
+
+    elif opcao == 3:
+        print('\n======== EXTRATO ========')
+        print('Não forma realizadas movimentações.' if not extrato else extrato)
+        print(f'Saldo: R$ {saldo:.2f}')
+        print('========================\n')
+
+    elif opcao == 0:
+        print('''Obrigado por usar nosso sistema bancário!
+              Volte Sempre!''')
+        exit
+        
     else:
-        print('Valor excedido')
-    opcoes()
-    return saldo
-
-def extrato(saldo):
-    user = input('Para quem deseja transferir: ')
-    transf = float(input('Defina o valor a transferir: '))
-    if transf < 0:
-        print('Valor de transferencia inválido')
-    elif transf <= 2000:
-        saldo -= transf
-        print(f'R$ {transf} transferido para {user}')
-    else:
-        print('Valor de transferencia excedido')
-    opcoes()
-    return saldo
-
-opcoes()
+        print('Operação inválida, tente novamente!')
